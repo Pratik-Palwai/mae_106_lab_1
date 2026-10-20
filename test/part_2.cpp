@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-const int LED_PIN = D3;
+const int LED_PIN = 3;
 bool led_state = false;
 unsigned long current_time = 0;
 
