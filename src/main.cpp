@@ -11,7 +11,7 @@ unsigned long current_time = 0;
 void setup() {
 	pinMode(LED_PIN, OUTPUT); // initialize the correct pin as an output (versus an input pin)
   	Serial.begin(115200); // begin the serial (USB) communication at 115200 baudrate. ensure the baudrate in your serial monitor matches
-	delay(500); // a short delay helps the serial communication get ready and stable before using it in the program
+	delay(1000); // give serial communication time to initialize
 }
 
 // the main loop runs over and over again as long as the board is powered
@@ -20,12 +20,14 @@ void loop() {
 	digitalWrite(LED_PIN, led_state); // if led_state is true, the pin goes to HIGH. if led_state is false, the pin goes to LOW
 
 	if (LAB_SECTION == 1) {
-		// for this lab it doesn't print anything in part 1, only blinks the LED, so this if statement is empty
+		// Part 1: only blink the LED, no serial output needed
 	}
 
 	else if (LAB_SECTION == 2) {
 		current_time = millis(); // get the # of milliseconds since the board was turned on
-		Serial.println(current_time + "    " + led_state);
+		Serial.print(current_time);
+		Serial.print("    ");
+		Serial.println(led_state);
 	}
 
 	delay(1000); // wait one second
