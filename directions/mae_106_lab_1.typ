@@ -146,58 +146,10 @@
 ]
 
 #sec[12][Serial Monitoring and Millis Function][
-    #sub[a][You will often be interested in monitoring values in your program. To do this, you can use the Serial Monitor. The Serial Monitor is a feature of PlatformIO that allows you to communicate with the board via serial commands (over USB). To explore this feature, we will print to the serial port the value being set to the LED pin. First, we will modify the 'Blink' example to allow for serial communication between the computer and the microcontroller; we do this by adding the following command to the `setup()` function: `Serial.begin(115200)`. We can now "print" to the serial command the value being set to the LED pin using the `Serial.print(...)` or `Serial.println(...)` command in the `loop()` function, as shown in the program on the next page.]
+    #sub[a][You will often be interested in monitoring values in your program. To do this, you can use the Serial Monitor. The Serial Monitor is a feature of PlatformIO that allows you to communicate with the board via serial commands (over USB). To explore this feature, we will print to the serial port the value being set to the LED pin. First, we will modify the 'Blink' example to allow for serial communication between the computer and the microcontroller; we do this by adding the following command to the `setup()` function: `Serial.begin(115200)`. We can now "print" to the serial command the value being set to the LED pin using the `Serial.print(...)` or `Serial.println(...)` command in the `loop()` function.]
     #cont[Note: `Serial.print(...)` differs from `Serial.println(...)` in that 'println' includes a 'carriage return' at the end of the line, which ends printing on the line. In other words, the next print statement will start on a new line.]
     #cont[We will add a measure of the time that has elapsed since the program began executing. This will be a brief introduction into using measurements of time in your programs. To do this, we will use the `millis()` function and print the current time of the program each time we print the state of the LED pin.]
-    #cont[Copy the following code into "src/main.cpp". Once the code is ready, build it and upload it to the board (Ctrl + Alt + B and Ctrl + Alt + U). Finally, to monitor the values being printed to the serial port, open the PlatformIO Serial Monitor (click Ctrl + Alt + S or the plug icon at the bottom of the VScode window). The baud rate of the monitor must match the value in `Serial.begin(...)`; this project's "platformio.ini" sets it to 115200. The Serial Monitor should update every second with the state of the LED pin. PlatformIO does not include a Serial Plotter, so show the output as a graph by copying the values into Excel or another graphing program.]
-    #cont[
-        ```cpp
-        /*
-            Blink and print
-            Turns on an LED on for one second, then off for one second, repeatedly.
-            Writes the state and the current time to the serial port.
-        */
-
-        #include <Arduino.h>
-
-        // Pin 8 has the on-board LED on the ESP32-C3 Super Mini. Give it a name:
-        int led = 8;
-
-        // Variable to store the LED state: it can only be HIGH or LOW
-        bool ledState;
-
-        // Variable to store the current time
-        unsigned long currentTime;
-
-        // the setup function runs once when you press reset or power the board
-        void setup() {
-            // initialize digital pin 8 as an output.
-            pinMode(led, OUTPUT);
-            Serial.begin(115200); // Start serial communication
-        }
-
-        // the loop function runs over and over again forever
-        void loop() {
-            ledState = HIGH;             // HIGH is the voltage level
-            currentTime = millis();      // Get milliseconds since the board was turned on
-            digitalWrite(led, ledState); // turn the LED on
-            // Write to serial the state of the LED and the current time
-            Serial.print(currentTime);
-            Serial.print("\t");
-            Serial.println(ledState);
-            delay(1000);                 // wait for a second
-
-            ledState = 0;
-            currentTime = millis();      // Get milliseconds since the board was turned on
-            digitalWrite(led, ledState); // turn the LED off
-            // Write to serial the state of the LED and the current time
-            Serial.print(currentTime);
-            Serial.print("\t");
-            Serial.println(ledState);
-            delay(1000);                 // wait for a second
-        }
-        ```
-    ]
+    #cont[Once the code is ready, build it and upload it to the board (Ctrl + Alt + B and Ctrl + Alt + U). Finally, to monitor the values being printed to the serial port, open the PlatformIO Serial Monitor (click Ctrl + Alt + S or the plug icon at the bottom of the VScode window). The baud rate of the monitor must match the value in `Serial.begin(...)`; this project's "platformio.ini" sets it to 115200. The Serial Monitor should update every second with the state of the LED pin. PlatformIO does not include a Serial Plotter, so show the output as a graph by copying the values into Excel or another graphing program.]
 ]
 
 #sec[13][Read the Pot Voltage in the ESP32 and Display It][
