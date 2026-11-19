@@ -64,7 +64,7 @@
                     [1], [Potentiometer],
                     [Various], [Wires],
                     [1], [Multimeter],
-                    [1], [ESP32],
+                    [1], [ESP32-C3 Super Mini],
                 )
             ]
         ]
@@ -77,13 +77,13 @@
         - The solderless breadboard is useful for building circuits.
         - Potentiometers are common circuit elements to control voltages and measure rotations.
         - The multimeter is a tool for making electrical measurements and debugging machines.
-        - The ESP32 is a very useful microcontroller that provides an easy setup to control electromechanical systems.
+        - The ESP32-C3 Super Mini is a very useful microcontroller that provides an easy setup to control electromechanical systems.
     ]
     #sub[b][Important Advice:]
     #cont[
         - When making electrical circuits, making a wiring mistake may result in a component getting "fried". Triple-check your wiring! If you smell something burning, immediately unplug the USB power cable and debug your circuit.
-        - Whenever working on any circuit, disconnect power by unplugging the Arduino board from your computer while working on the circuit.
-        - The biggest risk is creating a short circuit across power (i.e., directly connecting 5V to GND somehow). Watch out for that mistake!
+        - Whenever working on any circuit, disconnect power by unplugging the ESP32 board from your computer while working on the circuit.
+        - The biggest risk is creating a short circuit across power (i.e., directly connecting 5V or 3.3V to GND somehow). Watch out for that mistake!
         - Be neat and tidy in your wiring! Develop a system for what different wires mean in your circuit. For example, always use red wires for 5V and black wires for GND.
     ]
 ]
@@ -101,7 +101,7 @@
 
 #sec[5][Multimeters][
     #sub[a][A multimeter is an instrument designed to measure electric current, voltage (DC or AC), and resistance, typically over several ranges of values depending on the rotary switch position you choose. Throughout your labs, you will use a multimeter to measure DC voltages and resistances and to help you understand and debug your circuits.]
-    #cont[To use your multimeter, connect your black probe to COM ("common ground") and your red probe to the V$Omega$mA plug. The other plug (labeled "10A max") is for the red probe when you want to measure current. To make a measurement, turn the dial to want to measure: resistance ($Omega$), DC voltage ($V "--"$), AC voltage ($V^~$), or current ($A "--"$). Turn to the setting that shows the max value that is just greater than what you expect to measure. For example, the ESP32 supply is 5 Volts, so, to measure voltages from the ESP32, set it to 20 $V "--"$.]
+    #cont[To use your multimeter, connect your black probe to COM ("common ground") and your red probe to the V$Omega$mA plug. The other plug (labeled "10A max") is for the red probe when you want to measure current. To make a measurement, turn the dial to want to measure: resistance ($Omega$), DC voltage ($V "--"$), AC voltage ($V^~$), or current ($A "--"$). Turn to the setting that shows the max value that is just greater than what you expect to measure. For example, the ESP32's pins supply at most 5 Volts (3.3 Volts for the logic pins), so, to measure voltages from the ESP32, set it to 20 $V "--"$.]
     #fig("figure_1.png", 26%, [Figure 1: Multimeter])
 ]
 
@@ -111,7 +111,7 @@
 ]
 
 #sec[7][Breadboards][
-    #sub[a][You will use an electronic breadboard (solderless breadboard) to wire up temporary circuits as you build different devices you design. Electronic components and wires are inserted into the numerous sockets (holes) on the board. The sockets (dots) are connected internally (lines) as shown in Figure 3. A good method for wiring complicated circuits is to connect the source voltage (+5V, \~15V) and ground terminals to the long narrow horizontal strips (Figure 3). The components you place on the board now have ready access to power through short wires to sockets along the long strips. After wiring a circuit to the solderless board, the multimeter and oscilloscope are useful for measuring voltages at various points on the circuit, by using one of the multimeter probes.]
+    #sub[a][You will use an electronic breadboard (solderless breadboard) to wire up temporary circuits as you build different devices you design. Electronic components and wires are inserted into the numerous sockets (holes) on the board. The sockets (dots) are connected internally (lines) as shown in Figure 2. A good method for wiring complicated circuits is to connect the source voltage (+5V, +3.3V) and ground terminals to the long narrow horizontal strips (Figure 2). The components you place on the board now have ready access to power through short wires to sockets along the long strips. After wiring a circuit to the solderless board, the multimeter and oscilloscope are useful for measuring voltages at various points on the circuit, by using one of the multimeter probes.]
     #fig("figure_2.png", 58%, [Figure 2: Solderless Breadboard])
 ]
 
@@ -126,7 +126,7 @@
     #cont[*Practical Exam 1:* Show your TA your derivation of $V_"out"$ as a function of $V_"in"$ and explain why $V_"out"$ changes as you turn the pot shaft. Then, use the multimeter to show that you can control the voltage output of the pot by turning the shaft. Finally, show the TA the voltage waveform using the oscilloscope as you turn the shaft.]
 ]
 
-#sec[9][Part 3: The ESP32 microcontroller and VSCode/PlatformIO][
+#sec[9][The ESP32 microcontroller and VSCode/PlatformIO][
     #fig("figure_4.png", 52%, [Figure 4: ESP32C3 Super Mini Pinout])
     #sub[a][In this section of the lab, you will work with a microcontroller board that can be used to read many types of sensors as inputs and control a variety of actuators (e.g., dc motors, electronic valves). You will program your microcontroller using Microsoft Visual Studio Code IDE, which can compile C++ files using the PlatformIO extension.]
 
@@ -134,22 +134,22 @@
 ]
 
 #sec[10][Software setup][
-    #sub[a][First, connect the Uno to the computer and install and open the Arduino Integrated Development Environment (IDE). Once the computer is done installing the required drivers, you now need to setup the IDE for the appropriate board and communication port (COM port in Windows machines). You can do this by going to Tools > Board and selecting the "Arduino Uno" and then going to Tools > Serial Port and selecting the appropriate port (this value may vary but it will most likely be the highest number port on the list and should show your Arduino next to the port). Plugging the USB cable in and out can solve some of the connection problems you may face. If you can't get the port option to show, the cable or the Arduino itself may be bad.]
+    #sub[a][First, install Visual Studio Code and the PlatformIO IDE extension (VScode will offer it as a recommended extension when you open the lab folder). Then connect the ESP32-C3 Super Mini to the computer with a USB cable. The board, framework, and serial settings are already configured in the project's "platformio.ini" file, so you do not need to select a board manually, and PlatformIO auto-detects the communication port (COM port on Windows machines). Plugging the USB cable in and out can solve some of the connection problems you may face. If PlatformIO cannot find the board, the cable (make sure it supports data, not just charging) or the ESP32 itself may be bad. If the upload fails, hold the BOOT button while plugging in the board to put it into upload mode.]
 ]
 
 #sec[11][Example: Blink][
-    #sub[a][Open the lab folder "mae_106_lab_1/" in VScode, and navigate the to the source code folder "src/". All the code for this lab is stored in "main.cpp"]
+    #sub[a][Open the lab folder "mae_106_lab_1/" in VScode, and navigate to the source code folder "src/". All the code for this lab is stored in "main.cpp".]
 
     #cont[Once the code is ready, compile the code either with Ctrl + Alt + B or by pressing the #sym.checkmark at the bottom left of the VScode window (it should be called PlatformIO: Build). Once PlatformIO finishes compiling the program, you can upload it with Ctrl + Alt + U or with the #sym.arrow.r button. PlatformIO will auto-detect the ESP32's COM port, and once it finishes uploading you should see the board's LED turn on and off.]
 
-    #cont[IMPORTANT: Arduino programs must always include at least two functions: `setup()` and `loop()` (although they may also include more). As soon as the microcontroller is powered it will first run the commands in the `setup()` function and then move on to executing the commands in the `loop()` function until the power is removed.]
+    #cont[IMPORTANT: Programs written with the Arduino framework (as used by PlatformIO here) must always include `#include <Arduino.h>` at the top of "main.cpp" and at least two functions: `setup()` and `loop()` (although they may also include more). As soon as the microcontroller is powered it will first run the commands in the `setup()` function and then move on to executing the commands in the `loop()` function until the power is removed.]
 ]
 
 #sec[12][Serial Monitoring and Millis Function][
-    #sub[a][You will often be interested in monitoring values in your Arduino program. To do this, you can use the Serial Monitor. The Serial Monitor is a feature of the Arduino IDE that allows you to communicate with the board via serial commands (over USB). To explore this feature, we will print to the serial port the value being set to the LED pin. First, we will modify the 'Blink' example to allow for serial communication between the computer and the microcontroller; we do this by adding the following command to the `setup()` function: `Serial.begin(9600)`. We can now "print" to the serial command the value being set to the LED pin using the `Serial.print(...)` or `Serial.println(...)` command in the `loop()` function, as shown in the program on the next page.]
+    #sub[a][You will often be interested in monitoring values in your program. To do this, you can use the Serial Monitor. The Serial Monitor is a feature of PlatformIO that allows you to communicate with the board via serial commands (over USB). To explore this feature, we will print to the serial port the value being set to the LED pin. First, we will modify the 'Blink' example to allow for serial communication between the computer and the microcontroller; we do this by adding the following command to the `setup()` function: `Serial.begin(115200)`. We can now "print" to the serial command the value being set to the LED pin using the `Serial.print(...)` or `Serial.println(...)` command in the `loop()` function, as shown in the program on the next page.]
     #cont[Note: `Serial.print(...)` differs from `Serial.println(...)` in that 'println' includes a 'carriage return' at the end of the line, which ends printing on the line. In other words, the next print statement will start on a new line.]
-    #cont[We will add a measure of the time that has elapsed since the program began executing. This will be a brief introduction into using measurements of time with Arduino programs. To do this, we will use the `millis()` function and print the current time of the program each time we print the state of the LED pin.]
-    #cont[Copy the following code into the IDE. Once the code is ready, go ahead and "Verify/Compile" and then "Upload" it to the board. Finally, to monitor the values being printed to the serial port, open the Serial Monitor (click CTRL + SHFT + M or Tools->Serial Monitor). The Serial Monitor should update every second with the state of the LED pin. Try showing the output as a graph on the Serial Plotter.]
+    #cont[We will add a measure of the time that has elapsed since the program began executing. This will be a brief introduction into using measurements of time in your programs. To do this, we will use the `millis()` function and print the current time of the program each time we print the state of the LED pin.]
+    #cont[Copy the following code into "src/main.cpp". Once the code is ready, build it and upload it to the board (Ctrl + Alt + B and Ctrl + Alt + U). Finally, to monitor the values being printed to the serial port, open the PlatformIO Serial Monitor (click Ctrl + Alt + S or the plug icon at the bottom of the VScode window). The baud rate of the monitor must match the value in `Serial.begin(...)`; this project's "platformio.ini" sets it to 115200. The Serial Monitor should update every second with the state of the LED pin. PlatformIO does not include a Serial Plotter, so show the output as a graph by copying the values into Excel or another graphing program.]
     #cont[
         ```cpp
         /*
@@ -158,8 +158,10 @@
             Writes the state and the current time to the serial port.
         */
 
-        // Pin 13 has an LED connected on most Arduino boards. Give it a name:
-        int led = 13;
+        #include <Arduino.h>
+
+        // Pin 8 has the on-board LED on the ESP32-C3 Super Mini. Give it a name:
+        int led = 8;
 
         // Variable to store the LED state: it can only be HIGH or LOW
         bool ledState;
@@ -169,15 +171,15 @@
 
         // the setup function runs once when you press reset or power the board
         void setup() {
-            // initialize digital pin 13 as an output.
+            // initialize digital pin 8 as an output.
             pinMode(led, OUTPUT);
-            Serial.begin(9600); // Start serial communication
+            Serial.begin(115200); // Start serial communication
         }
 
         // the loop function runs over and over again forever
         void loop() {
             ledState = HIGH;             // HIGH is the voltage level
-            currentTime = millis();      // Get milliseconds since the arduino was turned on
+            currentTime = millis();      // Get milliseconds since the board was turned on
             digitalWrite(led, ledState); // turn the LED on
             // Write to serial the state of the LED and the current time
             Serial.print(currentTime);
@@ -186,7 +188,7 @@
             delay(1000);                 // wait for a second
 
             ledState = 0;
-            currentTime = millis();      // Get milliseconds since the arduino was turned on
+            currentTime = millis();      // Get milliseconds since the board was turned on
             digitalWrite(led, ledState); // turn the LED off
             // Write to serial the state of the LED and the current time
             Serial.print(currentTime);
@@ -198,11 +200,11 @@
     ]
 ]
 
-#sec[13][Read the Pot Voltage in the Arduino and Display It][
-    #sub[a][Using the lecture notes and online documentation on the Arduino web site, figure out how to read the pot voltage into the Arduino using one of the Analog to Digital (A/D) ports. Then print the pot voltage to the serial monitor. Show also that you can graph the pot voltage as you turn the shaft using the serial plotter. You can highlight and copy-paste the serial monitor values in Excel or another graphing program.]
+#sec[13][Read the Pot Voltage in the ESP32 and Display It][
+    #sub[a][Using the lecture notes and online documentation on the Arduino-ESP32 web site, figure out how to read the pot voltage into the ESP32 using one of the Analog to Digital (A/D) pins (see Figure 4). Power the pot from the 3.3V pin, not 5V, since the ESP32's input pins are only rated for 3.3V. Then print the pot voltage to the serial monitor. Show also that you can graph the pot voltage as you turn the shaft. You can highlight and copy-paste the serial monitor values in Excel or another graphing program.]
     #cont[Now, modify the code provided in the 'Blink' example and make the LED blink at a frequency of 4Hz. The obvious way to do this is by modifying the delay. Make sure to look at the light and count that the number of blinks in say 10 seconds is correct to confirm it's blinking at 4 Hz.]
     #cont[The problem with using the delay function is that it slows the program down so nothing is writing to the serial port while the delay is executing. You will see this when you plot your data; the serial port is only saving one point each time after the delay, so you will see something that looks more like a triangle wave. The way to improve this is to eliminate the delays and use the timer and If-then statement to adjust the blink rate. After you have gotten it to blink at 4 Hz using the delay function, remove the delay functions and add some code that uses the information you get from `millis()` along with an if-then statement to make the timer blink at 4 Hz. Save the data with this version and plot it in Excel. You should see a square wave. For your final project, it's often better to avoid using `delay()` and to use the timer as, again, `delay()` shuts everything down for a while.]
-    #cont[This part is intentionally open-ended (rather than step-by-step instructions) so you learn how to use online resources to problem solve and build skills. You can do it if you endure the struggle to learn and stick with it! If you get stuck, consult the online Arduino documentation, ask your lab mates for help, and ask your TA for help.]
+    #cont[This part is intentionally open-ended (rather than step-by-step instructions) so you learn how to use online resources to problem solve and build skills. You can do it if you endure the struggle to learn and stick with it! If you get stuck, consult the online Arduino-ESP32 and PlatformIO documentation, ask your lab mates for help, and ask your TA for help.]
     #cont[*Practical Exam \#2:* Modify the code provided in the 'Blink' example and make the LED blink at a frequency of 4Hz. Do this first by modifying the `delay()` functions, then remove the `delay()` functions and come up with a way to do it by checking `millis()`. Show your TA that the light is blinking at 4 Hz by connecting the board to the oscilloscope and displaying at least two periods of the signal. You should also copy the elapsed time and `ledState` data that were printed to the serial monitor and plot it in, e.g., Excel.]
-    #cont[Extra time, self-motivated, and curious? Try to figure out how to read the pot voltage into the Arduino using one of the A/D ports, then use it to turn the LED on and off.]
+    #cont[Extra time, self-motivated, and curious? Try to figure out how to read the pot voltage into the ESP32 using one of the A/D pins, then use it to turn the LED on and off.]
 ]

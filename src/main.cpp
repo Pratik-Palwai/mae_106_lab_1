@@ -3,7 +3,7 @@
 // set this to 1 to run the code for lab 3 part 1. set this to 2 to run the code for part 2
 const int LAB_SECTION = 1;
 
-const int LED_PIN = 3;
+const int LED_PIN = 8;
 bool led_state = false;
 unsigned long current_time = 0;
 
